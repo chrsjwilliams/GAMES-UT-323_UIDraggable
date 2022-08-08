@@ -17,15 +17,45 @@ public class InputManager : MonoBehaviour
     public delegate void TouchMovedEvent(Finger finger, float time);
     public event TouchMovedEvent OnTouchMoved;
 
+    public List<UIDragger> draggableUI { get; private set; }
+
     private void Awake()
     {
         if(Instance == null)
         {
             Instance = this;
+            draggableUI = new List<UIDragger>();
         }
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    public void AddDraggableUI(UIDragger obj)
+    {
+        if (draggableUI.Contains(obj)) return;
+
+        draggableUI.Add(obj);
+    }
+
+    public void RemoveDraggableUI(UIDragger obj)
+    {
+        if (!draggableUI.Contains(obj)) return;
+
+        draggableUI.Remove(obj);
+    }
+
+    public void EnableDraggableUI(UIDragger obj, bool canMove)
+    {
+        obj.EnableInput(canMove);
+    }
+
+    public void EnableDraggableUI(List<UIDragger> obj, bool canMove)
+    {
+        foreach(UIDragger uiObj in obj)
+        {
+            EnableDraggableUI(uiObj, canMove);
         }
     }
 

@@ -11,17 +11,29 @@ using UnityEngine.UI;
 /// </summary>
 public class UIDragger : EventTrigger
 {
-    bool disableInput;
+    //~TODO: have UI dragger register themselves to Input manager onEnable and deregister on disable
+
+    bool enableInput;
 
     // Sets if the gameObject is selectable. At the start of the application,
     // no object is selected
     bool isSelected = false;
 
+    private void OnEnable()
+    {
+        InputManager.Instance.AddDraggableUI(this);   
+    }
+
+    private void OnDisable()
+    {
+        InputManager.Instance.RemoveDraggableUI(this);
+    }
+
     // This event occurs when the user toushes down either using their cursor or
     // when we touch the object
     public override void OnPointerDown(PointerEventData eventData)
     {
-        if (disableInput) return;
+        if (!enableInput) return;
         // base.OnPointerDown(eventData runs the command of the inherited function
         // OnPointerDown function
         base.OnPointerDown(eventData);
@@ -40,15 +52,15 @@ public class UIDragger : EventTrigger
         isSelected = false;
     }
 
-    public void ToggleDisable()
+    public void EnableInput(bool value)
     {
-        disableInput = !disableInput;
+        enableInput = value;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (disableInput)
+        if (!enableInput)
         {
             isSelected = false;
             return;
