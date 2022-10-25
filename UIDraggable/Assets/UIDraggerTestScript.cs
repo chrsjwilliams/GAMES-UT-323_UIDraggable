@@ -3,12 +3,13 @@ using UnityEngine;
 [DefaultExecutionOrder(10)]
 public class UIDraggerTestScript : MonoBehaviour
 {
-    [SerializeField] bool canMove;
+    [Header("Press space to toggle movement")]
+    bool canMove;
     // Start is called before the first frame update
     void Start()
     {
         canMove = true;
-        InputManager.Instance.EnableDraggableUI(InputManager.Instance.draggableUI, canMove);
+        InputManager.Instance.EnableDraggableUI(InputManager.Instance.DraggableUI, canMove);
 
     }
 
@@ -17,7 +18,7 @@ public class UIDraggerTestScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             canMove = !canMove;
-            InputManager.Instance.EnableDraggableUI(InputManager.Instance.draggableUI, canMove);
+            InputManager.Instance.EnableDraggableUI(InputManager.Instance.DraggableUI, canMove);
         }
     }
 }

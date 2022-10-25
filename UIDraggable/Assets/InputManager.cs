@@ -17,7 +17,9 @@ public class InputManager : MonoBehaviour
     public delegate void TouchMovedEvent(Finger finger, float time);
     public event TouchMovedEvent OnTouchMoved;
 
-    public List<UIDragger> draggableUI { get; private set; }
+    [SerializeField] private List<UIDragger> draggableUI;
+    public List<UIDragger> DraggableUI {
+                get { return draggableUI; }}
 
     private void Awake()
     {
